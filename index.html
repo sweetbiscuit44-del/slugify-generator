@@ -5,235 +5,255 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>✨ Slugify – Clean URL Generator</title>
 <style>
-  :root {
-    --primary: #4CAF50;
-    --accent: #3498db;
-    --bg: #f5f7fa;
-    --text: #333;
-    --border: #ccc;
-    --radius: 10px;
-  }
+  :root {
+    --primary: #38b773;
+    --accent: #3b82f6;
+    --bg1: #f8fafc;
+    --bg2: #eef4ff;
+    --text: #222;
+    --muted: #555;
+    --border: #d0d8e0;
+    --radius: 14px;
+    --shadow: 0 8px 25px rgba(0,0,0,0.05);
+  }
 
-  body {
-    font-family: "Segoe UI", Roboto, sans-serif;
-    background: linear-gradient(180deg, #ffffff, #e9f3ff);
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    color: var(--text);
-  }
+  body {
+    font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--text);
+  }
 
-  .container {
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-    max-width: 640px;
-    width: 100%;
-    padding: 30px;
-    animation: fadeIn 0.5s ease;
-  }
+  .container {
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(6px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-width: 640px;
+    width: 100%;
+    padding: 32px 26px;
+    animation: fadeIn 0.6s ease;
+  }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-  h1 {
-    text-align: center;
-    font-size: 1.9em;
-    color: var(--primary);
-    margin-bottom: 10px;
-  }
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 0 8px;
+  }
 
-  p {
-    text-align: center;
-    color: #555;
-    font-size: 0.95em;
-  }
+  p {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.96em;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
 
-  textarea {
-    width: 100%;
-    min-height: 100px;
-    padding: 14px;
-    font-size: 16px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    box-sizing: border-box;
-    resize: vertical;
-    transition: box-shadow 0.2s, border 0.2s;
-  }
+  textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: #fff;
+    resize: vertical;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    outline: none;
+  }
 
-  textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.4);
-    outline: none;
-  }
+  .toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    font-size: 0.95em;
+    color: var(--muted);
+  }
 
-  .toggle-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    font-size: 0.95em;
-    color: #444;
-  }
+  .buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
 
-  .buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-  }
+  button {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.1s, background 0.25s;
+  }
+  button:hover { transform: scale(1.03); }
 
-  button {
-    flex: 1;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: background 0.3s, transform 0.1s;
-  }
+  #generateBtn {
+    background: var(--primary);
+    color: white;
+  }
+  #generateBtn:hover { background: #2e9e62; }
 
-  button:hover {
-    transform: scale(1.03);
-  }
+  #clearBtn {
+    background: #ef4444;
+    color: white;
+  }
+  #clearBtn:hover { background: #d73232; }
 
-  #generateBtn {
-    background: var(--primary);
-    color: white;
-  }
+  .output-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
 
-  #clearBtn {
-    background: #e74c3c;
-    color: white;
-  }
+  .output-container input {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #fff;
+    box-sizing: border-box;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 
-  .output-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 15px;
-  }
+  #copyButton {
+    background: var(--accent);
+    color: white;
+    padding: 12px 15px;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s, transform 0.1s;
+  }
+  #copyButton:hover { background: #2563eb; }
 
-  .output-container input {
-    flex-grow: 1;
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-sizing: border-box;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
+  #copyConfirmation {
+    font-size: 0.85em;
+    color: var(--primary);
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.4s ease, transform 0.3s ease;
+    text-align: right;
+    margin-top: 4px;
+  }
+  #copyConfirmation.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-  #copyButton {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 12px 15px;
-    font-size: 16px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: background 0.3s;
-  }
+  .donate, .footer {
+    text-align: center;
+    margin-top: 26px;
+    font-size: 0.9em;
+    color: #666;
+  }
+  .donate a {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .footer {
+    font-size: 0.85em;
+    color: #777;
+  }
 
-  #copyButton:hover { background: #2c82c9; }
-
-  #copyConfirmation {
-    font-size: 0.85em;
-    color: #27ae60;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    text-align: right;
-    margin-top: 4px;
-  }
-
-  .donate, .footer {
-    text-align: center;
-    margin-top: 25px;
-    font-size: 0.9em;
-    color: #666;
-  }
-
-  .donate a {
-    color: #e74c3c;
-    text-decoration: none;
-    font-weight: bold;
-  }
+  @media (max-width: 480px) {
+    .container { padding: 24px 18px; }
+    button { font-size: 15px; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>✨ Slugify</h1>
-  <p>Convert any text or title into a clean, SEO-friendly URL slug instantly!</p>
+  <h1>✨ Slugify</h1>
+  <p>Turn text or titles into clean, SEO-friendly slugs instantly.</p>
 
-  <textarea id="input" placeholder="Type or paste your text here..."></textarea>
+  <textarea id="input" placeholder="Type or paste your text here..."></textarea>
 
-  <div class="toggle-container">
-    <label>
-      <input type="checkbox" id="autoToggle" checked>
-      Auto-generate as I type
-    </label>
-  </div>
+  <div class="toggle-container">
+    <label>
+      <input type="checkbox" id="autoToggle" checked> Auto-generate as I type
+    </label>
+  </div>
 
-  <div class="buttons">
-    <button id="generateBtn" onclick="generateSlug()">Generate</button>
-    <button id="clearBtn" onclick="clearAll()">Clear</button>
-  </div>
+  <div class="buttons">
+    <button id="generateBtn" onclick="generateSlug()">Generate</button>
+    <button id="clearBtn" onclick="clearAll()">Clear</button>
+  </div>
 
-  <div class="output-container">
-    <input type="text" id="output" readonly placeholder="Your slug will appear here..." />
-    <button id="copyButton" onclick="copySlug()">Copy</button>
-  </div>
+  <div class="output-container">
+    <input type="text" id="output" readonly placeholder="Your slug will appear here..." />
+    <button id="copyButton" onclick="copySlug()">Copy</button>
+  </div>
 
-  <div id="copyConfirmation">Copied to clipboard!</div>
+  <div id="copyConfirmation">Copied to clipboard!</div>
 
-  <div class="donate">
-    💖 Enjoy this tool? <a href="https://paypal.me/sweetbiscuit44" target="_blank">Support it with $1</a>
-  </div>
+  <div class="donate">
+    💖 Enjoy this tool? <a href="https://paypal.me/sweetbiscuit44" target="_blank">Support with $1</a>
+  </div>
 
-  <div class="footer">Built with ☕ & care by Sweet-Biscuit44 | No ads, no tracking.</div>
+  <div class="footer">
+    Built with ☕ & care by Sweet-Biscuit44 — No ads, no tracking.
+  </div>
 </div>
 
 <script>
-  const input = document.getElementById('input');
-  const output = document.getElementById('output');
-  const copyConfirmation = document.getElementById('copyConfirmation');
-  const autoToggle = document.getElementById('autoToggle');
+const input=document.getElementById('input');
+const output=document.getElementById('output');
+const copyMsg=document.getElementById('copyConfirmation');
+const autoToggle=document.getElementById('autoToggle');
 
-  function generateSlug() {
-    const slug = input.value
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .trim()
-      .replace(/[-\s]+/g, '-')
-      .replace(/^-+|-+$/g, '');
-    output.value = slug || '';
-  }
+function generateSlug(){
+  const slug=input.value
+    .toLowerCase()
+    .replace(/[^\w\s-]/g,'')
+    .trim()
+    .replace(/[-\s]+/g,'-')
+    .replace(/^-+|-+$/g,'');
+  output.value=slug||'';
+}
 
-  function copySlug() {
-    if (!output.value) return;
-    navigator.clipboard.writeText(output.value).then(() => {
-      copyConfirmation.style.opacity = '1';
-      setTimeout(() => copyConfirmation.style.opacity = '0', 1200);
-    });
-  }
+function copySlug(){
+  if(!output.value)return;
+  navigator.clipboard.writeText(output.value).then(()=>{
+    copyMsg.classList.add('show');
+    setTimeout(()=>copyMsg.classList.remove('show'),1000);
+  });
+}
 
-  function clearAll() {
-    input.value = '';
-    output.value = '';
-    input.focus();
-  }
+function clearAll(){
+  input.value='';output.value='';input.focus();
+}
 
-  autoToggle.addEventListener('change', () => {
-    if (autoToggle.checked) input.addEventListener('input', generateSlug);
-    else input.removeEventListener('input', generateSlug);
-  });
+autoToggle.addEventListener('change',()=>{
+  if(autoToggle.checked)input.addEventListener('input',generateSlug);
+  else input.removeEventListener('input',generateSlug);
+});
 
-  input.addEventListener('input', generateSlug);
+input.addEventListener('input',generateSlug);
 </script>
 </body>
 </html>
