@@ -184,6 +184,29 @@ color: #777;
 .container { padding: 24px 18px; }
 button { font-size: 15px; }
 }
+
+/* ⭐ Pill Button Animation */
+.pill-btn {
+display: inline-block;
+padding: 14px 26px;
+background: linear-gradient(90deg, #38b773, #3b82f6);
+color: white;
+font-weight: 600;
+border-radius: 999px;
+text-decoration: none;
+box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.pill-btn:hover {
+transform: scale(1.07);
+box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+}
+
+/* Biscuit Emoji Styling */
+.biscuit {
+font-size: 1.2em;
+margin-right: 6px;
+}
 </style>
 </head>
 <body>
@@ -215,10 +238,19 @@ button { font-size: 15px; }
 💖 Enjoy this tool? <a href="https://paypal.me/sweetbiscuit44" target="_blank">Support with $1</a>
 </div>
 
-<div class="footer">
-Built with ☕ & care by Sweet-Biscuit44 — No ads, no tracking.<br />
-Visit my main website: <a href="https://sweetbiscuit44-del.github.io/sweet-biscuit44-home-page/" target="_blank" rel="noopener">sweetbiscuit44-del.github.io</a>
+<div class="footer" style="margin-top:32px;">
+Built with ☕ & care by Sweet-Biscuit44 — No ads, no tracking.
 </div>
+
+<!-- ⭐ Biscuit Icon + Pill Button Website Link -->
+<div style="text-align:center; margin-top:22px;">
+<a href="https://sweetbiscuit44-del.github.io/sweet-biscuit44-home-page/" 
+   target="_blank" 
+   class="pill-btn">
+🍪 Visit My Main Website
+</a>
+</div>
+
 </div>
 
 <script>
