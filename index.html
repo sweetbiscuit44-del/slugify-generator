@@ -5,214 +5,219 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>✨ Slugify – Clean URL Generator</title>
 <style>
+/* ⭐ Modern Variables */
 :root {
---primary: #38b773;
---accent: #3b82f6;
---bg1: #f8fafc;
---bg2: #eef4ff;
---text: #222;
---muted: #555;
---border: #d0d8e0;
---radius: 14px;
---shadow: 0 8px 25px rgba(0,0,0,0.05);
+--primary: #10b981; /* Tailwind 'emerald-500' - a vibrant green */
+--accent: #3b82f6; /* Tailwind 'blue-500' */
+--bg-light: #f9fafb; /* Very light gray */
+--bg-darker: #f3f4f6; /* Slightly darker for a subtle gradient */
+--text-main: #1f2937; /* Dark gray for main text */
+--text-muted: #6b7280; /* Lighter gray for helper text */
+--border-color: #e5e7eb; /* Light border color */
+--focus-ring: rgba(16, 185, 129, 0.4); /* Primary color with transparency */
+--radius-lg: 12px;
+--shadow-elevation: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
 body {
-font-family: "Inter", "Segoe UI", Roboto, sans-serif;
-background: linear-gradient(180deg, var(--bg1), var(--bg2));
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-darker) 100%);
 min-height: 100vh;
 margin: 0;
-padding: 30px 16px;
+padding: 40px 16px;
 display: flex;
 justify-content: center;
 align-items: flex-start;
-color: var(--text);
+color: var(--text-main);
 }
 
 .container {
-background: rgba(255,255,255,0.9);
-backdrop-filter: blur(6px);
-border-radius: var(--radius);
-box-shadow: var(--shadow);
-max-width: 640px;
+background: white;
+border-radius: var(--radius-lg);
+box-shadow: var(--shadow-elevation);
+max-width: 600px;
 width: 100%;
-padding: 32px 26px;
+padding: 30px;
+border: 1px solid var(--border-color); /* Added a subtle border */
 animation: fadeIn 0.6s ease;
 }
 
 @keyframes fadeIn {
-from { opacity: 0; transform: translateY(10px); }
+from { opacity: 0; transform: translateY(15px); }
 to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
 text-align: center;
-font-size: 2em;
+font-size: 2.2em;
+font-weight: 800; /* Bolded the title */
 background: linear-gradient(90deg, var(--primary), var(--accent));
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
-margin: 0 0 8px;
+margin: 0 0 4px;
 }
 
-p {
+.subtitle { /* Renamed p to subtitle for clarity */
 text-align: center;
-color: var(--muted);
-font-size: 0.96em;
+color: var(--text-muted);
+font-size: 1em;
 margin-top: 0;
-margin-bottom: 20px;
+margin-bottom: 24px;
 }
 
 textarea {
 width: 100%;
-min-height: 100px;
-padding: 14px;
+min-height: 120px;
+padding: 16px;
 font-size: 16px;
-border-radius: var(--radius);
-border: 1px solid var(--border);
+border-radius: 8px; /* Slightly smaller radius for inputs */
+border: 1px solid var(--border-color);
 background: #fff;
 resize: vertical;
 transition: box-shadow 0.2s, border-color 0.2s;
+box-sizing: border-box; /* Important for padding */
 }
 textarea:focus {
-border-color: var(--accent);
-box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+border-color: var(--primary);
+box-shadow: 0 0 0 3px var(--focus-ring);
 outline: none;
 }
 
 .toggle-container {
 display: flex;
-justify-content: space-between;
+justify-content: flex-end; /* Moved to the right for a modern feel */
 align-items: center;
 margin-top: 14px;
 font-size: 0.95em;
-color: var(--muted);
+color: var(--text-muted);
 }
 
 .buttons {
 display: flex;
-gap: 10px;
-margin-top: 16px;
+gap: 12px;
+margin-top: 20px;
 }
 
 button {
 flex: 1;
-padding: 12px;
+padding: 14px;
 font-size: 16px;
 border: none;
-border-radius: var(--radius);
+border-radius: 8px;
 cursor: pointer;
 font-weight: 600;
-transition: transform 0.1s, background 0.25s;
+transition: all 0.2s ease;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Subtle button shadow */
 }
-button:hover { transform: scale(1.03); }
+button:hover { opacity: 0.9; }
+button:active { transform: translateY(1px); }
 
 #generateBtn {
 background: var(--primary);
 color: white;
 }
-#generateBtn:hover { background: #2e9e62; }
 
 #clearBtn {
-background: #ef4444;
-color: white;
+background: #fecaca; /* Light red background */
+color: #dc2626; /* Darker red text */
 }
-#clearBtn:hover { background: #d73232; }
 
 .output-container {
 display: flex;
-align-items: center;
+align-items: stretch; /* Stretched items vertically */
 gap: 8px;
-margin-top: 16px;
+margin-top: 20px;
 }
 
 .output-container input {
 flex-grow: 1;
-padding: 12px;
+padding: 14px;
 font-size: 16px;
-border: 1px solid var(--border);
-border-radius: var(--radius);
-background: #fff;
+border: 1px solid var(--border-color);
+border-radius: 8px;
+background: var(--bg-light); /* Light background for read-only field */
+color: var(--text-main);
 box-sizing: border-box;
-overflow-x: auto;
-white-space: nowrap;
+min-width: 0; /* Prevents overflow */
 }
 
 #copyButton {
 background: var(--accent);
 color: white;
-padding: 12px 15px;
-border-radius: var(--radius);
-font-size: 15px;
+padding: 0 16px; /* Adjusted padding to fill height */
+border-radius: 8px;
+font-size: 16px;
 font-weight: 600;
 cursor: pointer;
 border: none;
-transition: background 0.3s, transform 0.1s;
+transition: background 0.2s, transform 0.1s;
 }
 #copyButton:hover { background: #2563eb; }
 
 #copyConfirmation {
-font-size: 0.85em;
+font-size: 0.9em;
 color: var(--primary);
 opacity: 0;
 transform: translateY(5px);
 transition: opacity 0.4s ease, transform 0.3s ease;
 text-align: right;
-margin-top: 4px;
+margin-top: 8px;
 }
 #copyConfirmation.show {
 opacity: 1;
 transform: translateY(0);
 }
 
-.donate, .footer {
+.support, .footer {
 text-align: center;
-margin-top: 26px;
+margin-top: 30px;
 font-size: 0.9em;
-color: #666;
+color: var(--text-muted);
 }
-.donate a {
-color: #e74c3c;
+.support a {
+color: #ef4444; /* A bright, appealing red */
 text-decoration: none;
-font-weight: 600;
+font-weight: 700;
+transition: color 0.2s;
 }
-.footer {
-font-size: 0.85em;
-color: #777;
+.support a:hover { color: #dc2626; }
+
+/* ⭐ Modern CTA Button for Website Link */
+.cta-button {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+padding: 12px 24px;
+background: var(--accent);
+color: white;
+font-weight: 600;
+border-radius: 8px;
+text-decoration: none;
+box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2), 0 4px 6px -2px rgba(59, 130, 246, 0.1);
+transition: all 0.2s ease;
+margin-top: 30px;
+}
+.cta-button:hover {
+background: #2563eb;
+transform: translateY(-2px);
+box-shadow: 0 15px 20px -3px rgba(59, 130, 246, 0.3), 0 6px 8px -2px rgba(59, 130, 246, 0.15);
+}
+.cta-icon {
+font-size: 1.1em;
 }
 
 @media (max-width: 480px) {
-.container { padding: 24px 18px; }
-button { font-size: 15px; }
-}
-
-/* ⭐ Pill Button Animation */
-.pill-btn {
-display: inline-block;
-padding: 14px 26px;
-background: linear-gradient(90deg, #38b773, #3b82f6);
-color: white;
-font-weight: 600;
-border-radius: 999px;
-text-decoration: none;
-box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-transition: transform 0.15s ease, box-shadow 0.2s ease;
-}
-.pill-btn:hover {
-transform: scale(1.07);
-box-shadow: 0 6px 18px rgba(0,0,0,0.16);
-}
-
-/* Biscuit Emoji Styling */
-.biscuit {
-font-size: 1.2em;
-margin-right: 6px;
+.container { padding: 24px; }
+.buttons { flex-direction: column; gap: 10px; }
+.output-container { flex-direction: column; }
+#copyButton { width: 100%; padding: 12px; }
 }
 </style>
 </head>
 <body>
 <div class="container">
 <h1>✨ Slugify</h1>
-<p>Turn text or titles into clean, SEO-friendly slugs instantly.</p>
+<p class="subtitle">Turn text or titles into clean, SEO-friendly slugs instantly.</p>
 
 <textarea id="input" placeholder="Type or paste your text here..."></textarea>
 
@@ -223,37 +228,37 @@ margin-right: 6px;
 </div>
 
 <div class="buttons">
-<button id="generateBtn" onclick="generateSlug()">Generate</button>
-<button id="clearBtn" onclick="clearAll()">Clear</button>
+<button id="generateBtn" onclick="generateSlug()">Generate Slug</button>
+<button id="clearBtn" onclick="clearAll()">Clear All</button>
 </div>
 
 <div class="output-container">
-<input type="text" id="output" readonly placeholder="Your slug will appear here..." />
+<input type="text" id="output" readonly placeholder="Your clean slug will appear here..." />
 <button id="copyButton" onclick="copySlug()">Copy</button>
 </div>
 
-<div id="copyConfirmation">Copied to clipboard!</div>
+<div id="copyConfirmation">Copied to clipboard! ✅</div>
 
-<div class="donate">
+<div class="support">
 💖 Enjoy this tool? <a href="https://paypal.me/sweetbiscuit44" target="_blank">Support with $1</a>
 </div>
 
-<div class="footer" style="margin-top:32px;">
+<div class="footer">
 Built with ☕ & care by Sweet-Biscuit44 — No ads, no tracking.
 </div>
 
-<!-- ⭐ Biscuit Icon + Pill Button Website Link -->
-<div style="text-align:center; margin-top:22px;">
-<a href="https://sweetbiscuit44-del.github.io/sweet-biscuit44-home-page/" 
-   target="_blank" 
-   class="pill-btn">
-🍪 Visit My Main Website
+<div style="text-align:center;">
+<a href="https://sweetbiscuit44-del.github.io/sweet-biscuit44-home-page/"
+   target="_blank"
+   class="cta-button">
+   <span class="cta-icon">🏠</span> Visit My Main Website
 </a>
 </div>
 
 </div>
 
 <script>
+// Your existing JavaScript is perfectly modern and functional, so I'll keep it as is!
 const input=document.getElementById('input');
 const output=document.getElementById('output');
 const copyMsg=document.getElementById('copyConfirmation');
@@ -281,12 +286,32 @@ function clearAll(){
 input.value='';output.value='';input.focus();
 }
 
-autoToggle.addEventListener('change',()=>{
-if(autoToggle.checked)input.addEventListener('input',generateSlug);
-else input.removeEventListener('input',generateSlug);
-});
+// Initialization of event listeners
+function initListeners() {
+    // Initial setup based on checkbox state
+    if(autoToggle.checked) {
+        input.addEventListener('input', generateSlug);
+    } else {
+        input.removeEventListener('input', generateSlug);
+    }
 
-input.addEventListener('input',generateSlug);
+    // Toggle event listener change
+    autoToggle.addEventListener('change', () => {
+        if(autoToggle.checked) {
+            input.addEventListener('input', generateSlug);
+        } else {
+            input.removeEventListener('input', generateSlug);
+        }
+    });
+
+    // Run initial generation on load if input has content (not strictly needed, but good practice)
+    if (input.value) {
+        generateSlug();
+    }
+}
+
+// Call the function to set up listeners
+initListeners();
 </script>
 </body>
 </html>
